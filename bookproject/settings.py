@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import dj_database_url
+
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,7 +28,7 @@ SECRET_KEY = 'django-insecure-@yk@@13tecg$!3sqw@f8avaa5+1z$56sh=erjnjyz*0fd9=bxg
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = [*]
 
 # Application definition
 
@@ -43,6 +45,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -82,6 +85,15 @@ DATABASES = {
     }
 }
 
+if not DEBUG:
+ DATABASES = {
+    'default': dj_database_url.config(
+        # Replace this value with your local database's connection string.
+
+        default='postgresql://postgres:postgres@localhost:5432/bookproject',
+        conn_max_age=600
+    )
+ }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
