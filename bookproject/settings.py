@@ -135,9 +135,16 @@ STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # WhiteNoiseを使用している場合、効率的にファイルを配信するための設定（推奨）
+# settings.py
+
 STORAGES = {
+    # 1. 静的ファイルの設定（WhiteNoiseなど）
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+    # 2. メディアファイル（画像など）の設定（ここが抜けているはずです）
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
     },
 }
 
